@@ -1,8 +1,5 @@
 var fs = require('fs');
-var when = require('when');
-var nodefn = require('when/node');
 var EventEmitter = require('events').EventEmitter;
-var fsp = nodefn.liftAll(fs);
 
 /**
  * A periodic (delayed) file saver is a component used for caching file saves in memory and flushing them to disk when possible. When a need arises to gather some results incoming over a fast medium (such as numerous AJAX/socket messages per second), it is wasteful to write a single file as many times as there are updates.
@@ -25,14 +22,16 @@ PeriodicFileSaver.prototype._doWrite = function _doWrite(){
 	var self = this;
 	this._saveTimer = null;
 	var content = self._contentToSave;
-	fsp.writeFile(self._filePath, content, {
+	fs.writeFile(self._filePath, content, {
 		// Set file mode to 0644...
 		mode: 420,
 		flag: 'w'
-	}).done(function(){
+	}, function(error){
+		if(error){
+			self.emit('error', error);
+			return;
+		}
 		self.emit('writeSuccess', { content: content });
-	}, function(writeError){
-		self.emit('error', writeError);
 	});
 };
 
@@ -51,4 +50,4 @@ PeriodicFileSaver.prototype.save = function save(content){
 	}
 };
 
-module.exports.PeriodicFileSaver = PeriodicFileSaver;
+module.exports = PeriodicFileSaver;
