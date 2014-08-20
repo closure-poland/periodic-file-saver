@@ -1,0 +1,26 @@
+{
+  "name": "periodic-file-saver",
+  "version": "0.1.0",
+  "description": "save content to a file asynchronously with a delay, limiting I/O concurrency",
+  "main": "PeriodicFileSaver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/closure-poland/periodic-file-saver.git"
+  },
+  "keywords": [
+    "delay",
+    "file",
+    "save",
+    "fs",
+    "writeFile",
+    "periodic"
+  ],
+  "author": "Robert Kawecki <robert@geo-com.pl>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/closure-poland/periodic-file-saver/issues"
+  }
+}
